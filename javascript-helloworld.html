@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JavaScript Hello World</title>
+</head>
+<body>
+<input type="text", id="value1">
+
+<select id="opt">
+    <option value="+">더하기</option>
+    <option value="-">빼기</option>
+    <option value="*">곱하기</option>
+    <option value="/">나누기</option>
+</select>
+
+<input type="text", id="value2">
+
+<button id="btn" type="submit">==</button>
+<input type="text", id="value3">
+
+<script type="text/javascript">
+    //#value1과 #value2요소가 가지고 있는 값(value)을 콘솔에 출력한다.
+    var input1 = document.getElementById('value1');
+    var input2 = document.getElementById('value2');
+    var btn = document.getElementById('btn');
+    var select = document.getElementById('opt');
+    var input3 = document.getElementById('value3');
+
+    // console.log(input1.value);
+    // console.log(input2.value);
+
+
+//#btn을 클릭했을 때 #input1과 #input2의 값을 콘솔에 출력
+//onclick 메서드에 function을 할당
+
+// type#1
+// function printValue() {
+//     console.log(input1.value);
+//     console.log(input2.value);
+// }
+
+// type#2
+// btn.onclick = function() {
+//     console.log(input1.value);
+//     console.log(input2.value);
+//     console.log(input3.value);
+//
+// }
+
+
+//value3이라는 id를 가진 input요쇼를 만들고
+//버튼을 누르면 #input1과 #input2의 값을 더해 #input3의 value속성에 할당
+// btn.onclick = function() {
+//     input3.value = parseInt(input1.value) + parseInt(input2.value);
+// }
+
+
+// 연산자를 선택할 수 있는 select요소를 만들고, option으로 +, -, *, /를 넣는다
+// 버튼을 클릭하면 연산자의 형태에 따라 계산값을 #input3에 할당
+btn.onclick = function() {
+    var var1 = parseInt(input1.value);
+    var var2 = parseInt(input2.value);
+    var operator = select.value;
+    var result;
+    switch(operator) {
+        case '+':
+        result = var1 + var2;
+            break;
+        case '-':
+        result = var1 - var2;
+            break;
+        case '*':
+        result = var1 * var2;
+            break;
+        case '/':
+        result = var1 / var2;
+            break;
+    }
+    input3.value = result;
+}
+
+
+</script>
+
+<script type="text/javascript">
+    document.write("Hello, World! This is my first JavaScript.");
+    // [1,2,3,4,5] <- 이 배열을 순회하며 각 내용을 콘솔에 출력한다.
+    console.log('message');
+    var arr = [1,2,3,4,5];
+    for (i = 0; i < arr.length; i++) {
+        console.log(arr[i]);
+    }
+</script>
+</body>
+</html>
