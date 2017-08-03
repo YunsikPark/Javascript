@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AJAX</title>
-    <script src="node_modules/axios/dist/axios.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>AJAX</title>
+  <script src="node_modules/axios/dist/axios.js"></script>
 </head>
 <body>
-    <script>
-      var url = 'http://localhost:8000/api/post/';
-      var next;
-      var isEnd = false;
-      getPostList();
-      // 더보기 버튼 추가하고 클릭시 getPostList출력
-      function getPostList() {
-        var curUrl = url;
-        if(next != undefined) {
-          curUrl = next;
-        }
-        if(isEnd) {
-          alert('마지막입니다');
-          return;
-        }
-        axios.get(curUrl)
-          .then(function(response) {
-            if(response.data.next != null && response.data.next != undefined) {
-              next = response.data.next;
-            } else {
-              isEnd = true;
-            }
-            var postList = response.data.results;
-            for (var i = 0; i < postList.length; i++) {
-              createPost(postList[i]);
-            }
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+  <div id="content"></div>
+  <button id="more" style="width: 100%;">더보기!</button>
+  <script>
+    var moreBtn = document.getElementById('more')
+    moreBtn.onclick = getPostList;
+
+    var url = 'http://localhost:8000/api/post/';
+    var next;
+    var isEnd = false;
+
+    // getPostList();
+
+    // 더보기 버튼 추가하고 클릭시 getPostList출력
+
+    function getPostList() {
+      var curUrl = url;
+      if(next != undefined) {
+        curUrl = next;
       }
-      function createPost(post) {
-        var div = document.createElement('div');
-        // 생성한 div내부의 HTML에 h1과 img태그를 추가
-        div.innerHTML = '<h1>[PK:' + post.pk + ']' + post.author.username + '</h1>';
-        div.innerHTML += '<img src="' + post.photo + '" alt="" width="100%"/>';
-        // 생성한 div를 body태그의 자식으로 추가
-        document.body.appendChild(div);
+      if(isEnd) {
+        alert('마지막입니다');
+        moreBtn.style.display = 'none';
+        return;
       }
-    </script>
+      axios.get(curUrl)
+        .then(function(response) {
+          if(response.data.next != null && response.data.next != undefined) {
+            next = response.data.next;
+          } else {
+            isEnd = true;
+          }
+          var postList = response.data.results;
+          for (var i = 0; i < postList.length; i++) {
+            createPost(postList[i]);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+
+    function createPost(post) {
+      var content = document.getElementById('content');
+      var div = document.createElement('div');
+      // 생성한 div내부의 HTML에 h1과 img태그를 추가
+      div.innerHTML = '<h1>[PK:' + post.pk + ']' + post.author.username + '</h1>';
+      div.innerHTML += '<img src="' + post.photo + '" alt="" width="100%"/>';
+      // 생성한 div를 body태그의 자식으로 추가
+      content.appendChild(div);
+    }
+  </script>
 </body>
 </html>
